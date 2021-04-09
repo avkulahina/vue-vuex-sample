@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>{{ message }}</h2>
-    <h3>By {{ author }}</h3>
+    <h1> Weather </h1>
+    <h2>Location: {{ locationLoading ? `loading...` : `${lat}, ${lon}` }}</h2>
+    <h3>Country: {{ countryLoading ? 'loading...' : country }}</h3>
   </div>
 </template>
 
@@ -11,22 +11,22 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
   computed: {
     ...mapGetters({
-      message: 'Message/getMessage',
-      author: 'Person/getName'
+      lat: 'Location/getLatitude',
+      lon: 'Location/getLongitude',
+      locationLoading: 'Location/isLoading',
+      country: 'Country/getCountryString',
+      countryLoading: 'Country/isLoading'
     })
   },
   methods: {
     ...mapActions({
-      setMessage: 'Message/setMessage',
-      setName: 'Person/setName'
+      getLocation: 'Location/getLocation'
     })
+  },
+  created () {
+    this.getLocation()
   }
 }
 </script>
